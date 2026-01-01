@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MoodMap</title>
+    <meta name="description" content="Mood Map permet de publier et de découvrir les humeurs des gens partout dans le monde.">
+    <meta name="google-site-verification" content="TeKqWUnkNN9reB6uDdxZDX0FNiSwGfaKKkjhPTCCXmo" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#770181">
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+
+<body>
+<!-- CONNEXION -->
+<div id="authBox">
+  <h2>Login</h2>
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="password">
+  <button onclick="login()">Log in</button>
+  <p id="authMsg"></p>
+  <button onclick="
+    document.getElementById('authBox').style.display='none';
+    document.getElementById('authRegister').style.display='block';
+  " style="width: 35%; color:#99019e; background: none; border: none; padding: 0;  text-decoration: underline;">Create Account</button>
+</div>
+
+<!-- INSCRIPTION -->
+<div id="authRegister">
+  <h2>Create an account</h2>
+  <input type="text" id="usernameRegister" placeholder="Username" required>
+  <input type="email" id="emailRegister" placeholder="Email">
+  <input type="password" id="passwordRegister" placeholder="password"><br>
+  <button onclick="register()" style="width: 300px;">create an account</button><br><br>
+  <button onclick="
+    document.getElementById('authRegister').style.display='none';
+    document.getElementById('authBox').style.display='block';
+  " style="display:inline; color:#99019e; background: none; border: none; padding: 0;  text-decoration: underline;">Back to Login</button>
+</div>
+
+
+<div id="panelAfterLogin">
+
+  <button id="settingsBtn">⚙️</button>
+
+  <label for="avatarInput" id="avatarCircle">
+  <span id="avatarPlus">+</span>
+  <img id="avatarPreview" />
+</label>
+
+<input type="file" id="avatarInput" accept="image/*" hidden>
+
+  
+
+  <div id="userBar">
+    <span id="userNameDisplay"></span>
+
+    
+
+    <div id="settingsMenu">
+      <button onclick="logout()">Log out</button>
+      <button onclick="openDeleteModal()" class="danger">Delete account</button>
+    </div>
+  </div>
+  <div class="profile-moods">
+  <h6>Published moods</h6>
+
+  <div class="mood-row">😄 Happy <span id="count-happy">0</span></div>
+  <div class="mood-row">😐 Neutral <span id="count-neutral">0</span></div>
+  <div class="mood-row">☹️ Disappointed <span id="count-sad">0</span></div>
+  <div class="mood-row">😡 Angry <span id="count-angry">0</span></div>
+</div>
+
+
+</div>
+
+  <div id="autrePanel">
+    <h4>My Account</h4>
+    <div id="myMoodsList">
+      <div id="Dateafficherblock"></div>
+    </div>
+</div>
+  <!-- PRÉSENTATION -->
+  <div class="header">
+    <h1>MoodMap</h1>
+    <p>➔ Share your mood by clicking on the map</p>
+  </div>
+
+  <!-- BOUTONS CARTE / Profil -->
+  <div>
+    <h3>
+      <p1 style="font-size: 20px; color: white;">☰</p1>
+      <button id="btnCarte" style="border-radius: 10px; border: 1px solid rgb(255, 255, 255); width: 8%;">Map</button>
+      <button id="btnAutre" style="border-radius: 10px; border: 1px solid rgb(255, 255, 255); width: 8%;">Account</button>
+    </h3>
+  </div>
+
+  <!-- 🔍 BARRE DE RECHERCHE -->
+  <div id="searchBar">
+    <input type="text" id="searchInput" placeholder="Search for a place (France, Paris...)" />
+    <button id="searchBtn" style="background-color:#e714ee; border-radius: 10px;">Share</button>
+  </div>
+
+  <!-- 🗺️ CARTE -->
+  <div id="map"></div>
+
+  <!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+  <!-- Leaflet -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!-- Script principal -->
+  <script src="script.js"></script>
+
+  <div id="notification"></div>
+  
+<div id="deleteModal" class="modal">
+  <div class="modal-content">
+    <h3>Delete account</h3>
+    <p>This action is irreversible.</p>
+
+    <input type="password" id="deletePassword" placeholder="Enter your password">
+
+    <div class="modal-actions">
+      <button onclick="confirmDeleteAccount()" class="btn-delete">Delete</button>
+      <button onclick="closeDeleteModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+    .then(() => console.log('Service Worker OK'))
+    .catch(err => console.error('Service Worker error', err));
+}
+</script>
+</body>
+</html>
