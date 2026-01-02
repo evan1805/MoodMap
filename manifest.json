@@ -2,7 +2,6 @@
   "name": "MoodMap",
   "short_name": "MoodMap",
   "start_url": "/",
-  "display": "standalone",
   "background_color": "#770181",
   "theme_color": "#770181",
   "icons": [
